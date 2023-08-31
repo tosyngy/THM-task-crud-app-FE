@@ -17,3 +17,15 @@ interface ITask {
     tasks: ITask[]
     task?: ITask
   }
+
+  interface AddTask {
+    name: string
+    description: string
+    status?: boolean
+}
+
+interface IRootState{
+  tasks?: ITask[]
+  taskReducer: any
+
+}

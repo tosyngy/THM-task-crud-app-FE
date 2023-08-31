@@ -1,11 +1,11 @@
 import axios, { AxiosResponse } from "axios"
 
-const baseUrl: string | undefined = process.env.BASE_URL
+const baseUrl: string | undefined = process.env.REACT_APP_BASE_URL
 
 export const getTasks = async (): Promise<AxiosResponse<ApiDataType>> => {
   try {
     const tasks: AxiosResponse<ApiDataType> = await axios.get(
-      baseUrl + "/api/v1/tasks"
+      `${baseUrl}/tasks`,
     )
     return tasks
   } catch (error) {
@@ -23,7 +23,7 @@ export const addTask = async (
         status: false,
       }
       const saveTask: AxiosResponse<ApiDataType> = await axios.post(
-        baseUrl + "/add-task",
+      `${baseUrl}/add-task`,
         task
       )
       return saveTask
