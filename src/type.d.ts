@@ -8,12 +8,12 @@ interface ITask {
   }
   
   interface TaskProps {
-    todo: ITask
+    task: ITask
   }
   
   type ApiDataType = {
     message: string
     status: string
-    todos: ITask[]
-    todo?: ITask
+    tasks: ITask[]
+    task?: ITask
   }
