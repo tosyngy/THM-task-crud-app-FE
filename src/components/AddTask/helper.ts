@@ -9,7 +9,6 @@ const handleSaveTask = async (e: React.FormEvent, formData: ITask): Promise<ApiD
     }
     return response.data;
   } catch (err) {
-    console.log(err);
     return Promise.reject(err); // Re-throw the error to be caught at the caller level
   }
 };

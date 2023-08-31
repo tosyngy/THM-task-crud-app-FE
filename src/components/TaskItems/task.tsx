@@ -11,7 +11,6 @@ const Task: React.FC<TaskProps> = ({ task }) => {
         resp.then((result: ApiDataType | undefined) => {
             if (result) {
                 updateContexts(result.tasks)
-
             }
         })
             .catch((error) => {

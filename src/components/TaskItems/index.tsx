@@ -19,7 +19,7 @@ const Tasks: React.FC = () => {
       <AddTask setTasks={updateContexts} />
       <div className="scroll">
         {tasks.map((task, index) => (
-          <Task task={task} key={index} />
+          <Task task={task}  key={index} />
         ))}
       </div>
     </div>
