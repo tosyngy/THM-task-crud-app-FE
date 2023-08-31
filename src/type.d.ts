@@ -1,4 +1,4 @@
-interface ITodo {
+interface ITask {
     _id: string
     name: string
     description: string
@@ -7,13 +7,13 @@ interface ITodo {
     updatedAt?: string
   }
   
-  interface TodoProps {
-    todo: ITodo
+  interface TaskProps {
+    todo: ITask
   }
   
   type ApiDataType = {
     message: string
     status: string
-    todos: ITodo[]
-    todo?: ITodo
+    todos: ITask[]
+    todo?: ITask
   }
