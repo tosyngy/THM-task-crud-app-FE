@@ -1,5 +1,5 @@
 import React, { Suspense, useState } from 'react'
-import TaskItem from './components/TaskItems'
+import Tasks from './components/Tasks'
 import { MyContext } from "./MyContext";
 
 const App: React.FC = () => {
@@ -14,7 +14,7 @@ const App: React.FC = () => {
       <h1><img src="/banner.png" alt="TryHackMe Test" className='banner' /></h1>
       <MyContext.Provider value={{ tasks, updateContexts }}>
         <Suspense fallback={"Loading ..."}>
-           <TaskItem />
+           <Tasks />
         </Suspense>
        
       </MyContext.Provider>

@@ -1,12 +1,14 @@
 import { DeleteTask, UpdateTask } from "./helper";
 import { useMyContext } from '../../MyContext';
+import React from "react";
 
-const Task: React.FC<TaskProps> = ({ task }) => {
+const Task: React.FC<TaskProps> = ({ task, setEditId }) => {
     const checkTask: string = task.status ? `line-through` : "";
     const { updateContexts } = useMyContext();
 
     const handleUpdateTask = (e: React.FormEvent, task: ITask) => {
         e.preventDefault();
+        task.status = !task.status
         const resp = UpdateTask(task);
         resp.then((result: ApiDataType | undefined) => {
             if (result) {
@@ -36,17 +38,23 @@ const Task: React.FC<TaskProps> = ({ task }) => {
 
 
     return (
-        <div className="Card">
+        <div className="Card" id='task'>
             <div className="Card--text">
                 <h1 className={checkTask}>{task.name}</h1>
                 <span className={checkTask}>{task.description}</span>
             </div>
             <div className="Card--button">
                 <button
-                    onClick={(e) => handleUpdateTask(e, task)}
-                    className={task.status ? `hide-button` : "Card--button__done"}
+                    onClick={(e) => setEditId(task._id)}
+                    className={"Card--button__done"}
                 >
-                    Complete
+                    Edit
+                </button>
+                <button
+                    onClick={(e) => handleUpdateTask(e, task)}
+                    className={task.status ? `strike-button` : "Card--button__done"}
+                >
+                   {task.status ? `Uncomplete` : "Complete" }
                 </button>
                 <button
                     onClick={(e) => handleDeleteTask(e, task._id)}

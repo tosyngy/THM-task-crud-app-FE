@@ -1,10 +1,15 @@
 import { addTask } from "../../API";
 
-const handleSaveTask = async (e: React.FormEvent, formData: ITask): Promise<ApiDataType | undefined> => {
-  e.preventDefault();
+
+/**
+ * handleSaveTask
+ *
+ * @param {Object} ITask
+ */
+const handleSaveTask = async ( formData: ITask): Promise<ApiDataType | undefined> => {
   try {
     const response = await addTask(formData);
-    if (response.status !== 201) {
+    if (response?.status !== 201) {
       throw new Error("Error! Task not saved");
     }
     return response.data;

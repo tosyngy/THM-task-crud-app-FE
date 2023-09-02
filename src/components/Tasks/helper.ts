@@ -4,8 +4,7 @@ const fetchTasks = (): Promise<ITask[]> => {
   return getTasks()
     .then(({ data: { tasks } }: { data: { tasks: ITask[] } }) => tasks)
     .catch((err: Error) => {
-      console.log(err);
-      return []; // Return an empty array to handle the error
+      return [];
     });
 };
 
@@ -18,7 +17,7 @@ const UpdateTask = async ( task: ITask): Promise<ApiDataType | undefined> => {
     return response.data;
   } catch (err) {
     console.log(err);
-    return Promise.reject(err); // Re-throw the error to be caught at the caller level
+    return Promise.reject(err);
   }
 };
 
@@ -31,7 +30,7 @@ const DeleteTask = async ( _id: string): Promise<ApiDataType | undefined> => {
     return response.data;
   } catch (err) {
     console.log(err);
-    return Promise.reject(err); // Re-throw the error to be caught at the caller level
+    return Promise.reject(err);
   }
 };
 

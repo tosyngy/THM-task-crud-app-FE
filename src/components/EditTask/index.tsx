@@ -1,14 +1,17 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { handleSaveTask } from './helper';
+import { handleUpdateTask } from './helper';
 import { useMyContext } from '../../MyContext';
 
 type Props = {
   setTasks: Function
+  setEditId: Function
+  task: ITask
 }
 
-const AddTask: React.FC<Props> = ({ setTasks }) => {
-  const [formData, setFormData] = useState<ITask>({ name: '', description: '', _id: '', status: false });
+const EditTask: React.FC<Props> = ({ setTasks, task, setEditId }) => {
+  const [formData, setFormData] = useState<ITask>({ name: task.name, description: task.description, _id: task._id, status: task.status });
   const { updateContexts } = useMyContext();
+
 
 
   const handleForm = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -21,7 +24,7 @@ const AddTask: React.FC<Props> = ({ setTasks }) => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    handleSaveTask(formData)
+    handleUpdateTask(formData)
       .then((result: ApiDataType | undefined) => {
         if (result) {
           updateContexts(result.tasks)
@@ -30,15 +33,16 @@ const AddTask: React.FC<Props> = ({ setTasks }) => {
             "name": "",
             "description": "",
           });
+          setEditId("")
         }
       })
       .catch((error) => {
-        console.error("Error saving task:", error);
+        console.error("Error upding task:", error);
       });
   };
 
   return (
-    <form className='Form' onSubmit={handleSubmit}>
+    <form className='Form edit' onSubmit={handleSubmit}>
       <div>
         <div>
           <label htmlFor='name'>Name</label>
@@ -54,9 +58,10 @@ const AddTask: React.FC<Props> = ({ setTasks }) => {
           />
         </div>
       </div>
-      <button disabled={!formData.name || !formData.description} className={(!formData.name || !formData.description) ? "disabled" : ""}>Add Task</button>
+      <button disabled={!formData.name || !formData.description} className={(!formData.name || !formData.description) ? "disabled" : ""}>Save</button>
+      <button className='close' onClick={()=>setEditId("")} type='button'>Close</button>
     </form>
   );
 };
 
-export default AddTask;
+export default EditTask;

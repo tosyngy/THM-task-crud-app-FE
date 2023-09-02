@@ -9,6 +9,7 @@ interface ITask {
   
   interface TaskProps {
     task: ITask
+    setEditId: Function
   }
   
   type ApiDataType = {
