@@ -76,6 +76,18 @@ body {
   color: #fff;
 }
 
+.Card--button__edit {
+    border: 1px solid #172c6d;
+    color: #172c6d;
+    margin-right: 1rem;
+  }
+  
+  .Card--button__edit:hover {
+    border: 1px solid #172c6d;
+    background: #172c6d;
+    color: #fff;
+  }
+
 .Form {
   display: flex;
   justify-content: space-between;
@@ -119,6 +131,7 @@ body {
 .Form button:hover {
   color: #172c6d;
   background: #fff;
+  border: 1px solid #172c6d;
 }
 
 Form button.disabled {
