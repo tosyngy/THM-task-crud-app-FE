@@ -1,16 +1,16 @@
 import { getTasks, updateTask, deleteTask } from "../../API";
 
-const fetchTasks = (): Promise<ITask[]> => {
-  return getTasks()
+const FetchTasks = (token: string): Promise<ITask[]> => {
+  return getTasks(token)
     .then(({ data: { tasks } }: { data: { tasks: ITask[] } }) => tasks)
     .catch((err: Error) => {
       return [];
     });
 };
 
-const UpdateTask = async ( task: ITask): Promise<ApiDataType | undefined> => {
+const UpdateTask = async ( task: ITask, token: string): Promise<ApiDataType | undefined> => {
   try {
-    const response = await updateTask(task);
+    const response = await updateTask(task, token);
     if (response.status !== 200) {
       throw new Error("Error! Task not Updated");
     }
@@ -21,9 +21,9 @@ const UpdateTask = async ( task: ITask): Promise<ApiDataType | undefined> => {
   }
 };
 
-const DeleteTask = async ( _id: string): Promise<ApiDataType | undefined> => {
+const DeleteTask = async ( _id: string, token: string): Promise<ApiDataType | undefined> => {
   try {
-    const response = await deleteTask(_id);
+    const response = await deleteTask(_id, token);
     if (response.status !== 200) {
       throw new Error("Error! Task not Deleted");
     }
@@ -37,4 +37,4 @@ const DeleteTask = async ( _id: string): Promise<ApiDataType | undefined> => {
 
 
 
-export { DeleteTask, UpdateTask, fetchTasks };
+export { DeleteTask, UpdateTask, FetchTasks };

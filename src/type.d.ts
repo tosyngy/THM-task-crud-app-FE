@@ -6,6 +6,17 @@ interface ITask {
     createdAt?: string
     updatedAt?: string
   }
+
+  interface IUser{
+    _id: string
+    username: string
+    password: string
+  }
+
+  type LoginDataType = {
+    user: {_id: string, username: string}
+    token: string
+  }
   
   interface TaskProps {
     task: ITask

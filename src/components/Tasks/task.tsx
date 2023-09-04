@@ -1,15 +1,15 @@
 import { DeleteTask, UpdateTask } from "./helper";
-import { useMyContext } from '../../MyContext';
+import { useMyContext, } from '../../MyContext';
 import React from "react";
 
 const Task: React.FC<TaskProps> = ({ task, setEditId }) => {
     const checkTask: string = task.status ? `line-through` : "";
-    const { updateContexts } = useMyContext();
+    const { updateContexts, token } = useMyContext();
 
     const handleUpdateTask = (e: React.FormEvent, task: ITask) => {
         e.preventDefault();
         task.status = !task.status
-        const resp = UpdateTask(task);
+        const resp = UpdateTask(task, token);
         resp.then((result: ApiDataType | undefined) => {
             if (result) {
                 updateContexts(result.tasks)
@@ -28,7 +28,7 @@ const Task: React.FC<TaskProps> = ({ task, setEditId }) => {
             return false
         }
         e.preventDefault();
-        const resp = DeleteTask(id)
+        const resp = DeleteTask(id, token)
         resp.then((result: ApiDataType | undefined) => {
             if (result) {
                 updateContexts(result.tasks)

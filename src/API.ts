@@ -1,11 +1,42 @@
 import axios, { AxiosResponse } from "axios"
-
 const baseUrl: string | undefined = "http://localhost:4000/api/v1"
 
-export const getTasks = async (): Promise<AxiosResponse<ApiDataType>> => {
+export const login = async (user_data: IUser): Promise<AxiosResponse<LoginDataType>> => {
+  try {
+    const user: AxiosResponse<LoginDataType> = await axios.post(
+      `${baseUrl}/auth/login`,
+      user_data,
+
+    )
+    return user
+  } catch (error) {
+    console.log(error)
+    throw new Error("Error  while logining")
+  }
+}
+
+export const register = async (user_data: IUser): Promise<AxiosResponse<ApiDataType>> => {
+  try {
+    const user: AxiosResponse<ApiDataType> = await axios.post(
+      `${baseUrl}/auth/register`,
+      user_data
+    )
+    return user
+  } catch (error) {
+    console.log(error)
+    throw new Error("Error while registering")
+  }
+}
+
+export const getTasks = async (token: string): Promise<AxiosResponse<ApiDataType>> => {
   try {
     const tasks: AxiosResponse<ApiDataType> = await axios.get(
-      `${baseUrl}/tasks`,
+      `${baseUrl}/tasks`, {
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'content-type': 'application/json'
+      }
+    }
     )
     return tasks
   } catch (error) {
@@ -15,7 +46,7 @@ export const getTasks = async (): Promise<AxiosResponse<ApiDataType>> => {
 }
 
 export const addTask = async (
-  formData: ITask
+  formData: ITask, token: string
 ): Promise<AxiosResponse<ApiDataType>> => {
   try {
     const task: Omit<ITask, "_id"> = {
@@ -24,8 +55,13 @@ export const addTask = async (
       status: false,
     }
     const saveTask: AxiosResponse<ApiDataType> = await axios.post(
-      `${baseUrl}/add-task`,
-      task
+      `${baseUrl}/task`,
+      task, {
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'content-type': 'application/json'
+      }
+    }
     )
     return saveTask
   } catch (error) {
@@ -35,14 +71,20 @@ export const addTask = async (
 }
 
 export const updateTask = async (
-  task: ITask
+  task: ITask,
+  token: string
 ): Promise<AxiosResponse<ApiDataType>> => {
   try {
-    const taskUpdate: ITask =task
+    const taskUpdate: ITask = task
 
     const updatedTask: AxiosResponse<ApiDataType> = await axios.put(
       `${baseUrl}/task/${task._id}`,
-      taskUpdate
+      taskUpdate, {
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'content-type': 'application/json'
+      }
+    }
     )
     return updatedTask
   } catch (error) {
@@ -52,11 +94,17 @@ export const updateTask = async (
 }
 
 export const deleteTask = async (
-  _id: string
+  _id: string,
+  token: string
 ): Promise<AxiosResponse<ApiDataType>> => {
   try {
     const deletedTask: AxiosResponse<ApiDataType> = await axios.delete(
-      `${baseUrl}/task/${_id}`
+      `${baseUrl}/task/${_id}`, {
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'content-type': 'application/json'
+      }
+    }
     )
     return deletedTask
   } catch (error) {

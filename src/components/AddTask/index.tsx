@@ -1,14 +1,12 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { handleSaveTask } from './helper';
 import { useMyContext } from '../../MyContext';
+import { checkInput } from '../utils/validator';
 
-type Props = {
-  setTasks: Function
-}
 
-const AddTask: React.FC<Props> = ({ setTasks }) => {
+const AddTask: React.FC = () => {
   const [formData, setFormData] = useState<ITask>({ name: '', description: '', _id: '', status: false });
-  const { updateContexts } = useMyContext();
+  const { updateContexts, token } = useMyContext();
 
 
   const handleForm = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -21,7 +19,7 @@ const AddTask: React.FC<Props> = ({ setTasks }) => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    handleSaveTask(formData)
+    handleSaveTask(formData, token)
       .then((result: ApiDataType | undefined) => {
         if (result) {
           updateContexts(result.tasks)
@@ -37,12 +35,14 @@ const AddTask: React.FC<Props> = ({ setTasks }) => {
       });
   };
 
+
+
   return (
     <form className='Form' onSubmit={handleSubmit}>
       <div>
         <div>
           <label htmlFor='name'>Name</label>
-          <input onChange={handleForm} type='text' id='name' value={formData.name} />
+          <input onChange={handleForm} type='text' id='name' value={formData.name} required />
         </div>
         <div>
           <label htmlFor='description'>Description</label>
@@ -51,10 +51,12 @@ const AddTask: React.FC<Props> = ({ setTasks }) => {
             type='text'
             id='description'
             value={formData.description}
+            required
           />
         </div>
       </div>
-      <button disabled={!formData.name || !formData.description} className={(!formData.name || !formData.description) ? "disabled" : ""}>Add Task</button>
+      <button disabled={!!checkInput(formData.name, formData.description)}
+        className={checkInput(formData.name, formData.description) ? "disabled" : ""}>Add Task</button>
     </form>
   );
 };

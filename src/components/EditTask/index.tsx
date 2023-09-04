@@ -1,16 +1,16 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { handleUpdateTask } from './helper';
 import { useMyContext } from '../../MyContext';
+import { checkInput } from '../utils/validator';
 
 type Props = {
-  setTasks: Function
   setEditId: Function
   task: ITask
 }
 
-const EditTask: React.FC<Props> = ({ setTasks, task, setEditId }) => {
+const EditTask: React.FC<Props> = ({  task, setEditId }) => {
   const [formData, setFormData] = useState<ITask>({ name: task.name, description: task.description, _id: task._id, status: task.status });
-  const { updateContexts } = useMyContext();
+  const { updateContexts, token } = useMyContext();
 
 
 
@@ -24,7 +24,7 @@ const EditTask: React.FC<Props> = ({ setTasks, task, setEditId }) => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    handleUpdateTask(formData)
+    handleUpdateTask(formData, token)
       .then((result: ApiDataType | undefined) => {
         if (result) {
           updateContexts(result.tasks)
@@ -46,7 +46,7 @@ const EditTask: React.FC<Props> = ({ setTasks, task, setEditId }) => {
       <div>
         <div>
           <label htmlFor='name'>Name</label>
-          <input onChange={handleForm} type='text' id='name' value={formData.name} />
+          <input onChange={handleForm} type='text' id='name' value={formData.name} required/>
         </div>
         <div>
           <label htmlFor='description'>Description</label>
@@ -58,7 +58,9 @@ const EditTask: React.FC<Props> = ({ setTasks, task, setEditId }) => {
           />
         </div>
       </div>
-      <button disabled={!formData.name || !formData.description} className={(!formData.name || !formData.description) ? "disabled" : ""}>Save</button>
+      
+      <button disabled={!!checkInput(formData.name, formData.description)}
+        className={`${checkInput(formData.name, formData.description) ? "disabled" : ""} inline-botton`}>Save</button>
       <button className='close' onClick={()=>setEditId("")} type='button'>Close</button>
     </form>
   );

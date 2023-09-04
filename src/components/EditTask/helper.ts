@@ -6,9 +6,9 @@ import { updateTask } from "../../API";
  *
  * @param {Object} ITask
  */
-const handleUpdateTask = async ( task: ITask): Promise<ApiDataType | undefined> => {
+const handleUpdateTask = async ( task: ITask, token:string): Promise<ApiDataType | undefined> => {
   try {
-    const response = await updateTask(task);
+    const response = await updateTask(task, token);
     if (response.status !== 200) {
       throw new Error("Error! Task not Updated");
     }

@@ -49,7 +49,7 @@ body {
 
 .Card--button button {
   background: #f5f6f7;
-  padding: 0.2rem 0.5rem;
+  padding: 0.3rem 0.5rem;
   border-radius: 5px;
   cursor: pointer;
 }
@@ -122,10 +122,17 @@ body {
 .Form button {
   background: #172c6d;
   color: #fff;
-  padding: 0.2rem 0.5rem;
+  margin-top: 1.7em;
+  width: 100%;
+  padding: 0.5rem 4rem;
   border-radius: 5px;
   cursor: pointer;
   border: none;
+}
+
+.inline-botton {
+  padding: 0.4rem 0.5rem !important;
+  margin-right: 5px;
 }
 
 .Form button:hover {
@@ -141,7 +148,7 @@ Form button.disabled {
 Form button.close {
   background: white;
   color: #ca0000;
-  padding: 0.2rem 0.5rem;
+  padding: 0.3rem 0.5rem;
   border-radius: 5px;
   cursor: pointer;
   border: 1px solid #ca0000;
@@ -173,4 +180,8 @@ Form button.close:hover {
   overflow: auto;
   padding: 10px;
   max-height: calc(100vh - 400px);
+}
+
+.ml-15 {
+  margin-left: 15px;
 }
