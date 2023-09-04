@@ -43,7 +43,6 @@ const App: React.FC = () => {
             }
           </Suspense>
         </CookiesProvider>
-
       </MyContext.Provider>
     </main>
   )
