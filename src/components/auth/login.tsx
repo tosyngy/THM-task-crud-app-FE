@@ -7,9 +7,9 @@ type Props = {
     setToken: Function
 }
 
-const Login: React.FC<Props> = ({setToken}) => {
-    const [formData, setFormData] = useState<IUser>({ username: '', password: '', _id: '' });
-
+const Login: React.FC<Props> = ({ setToken }) => {
+    const [formData, setFormData] = useState<IUser>({ username: '', password: '' });
+    const [complete, setComplete] = useState<string>();
 
     const handleForm = (e: ChangeEvent<HTMLInputElement>): void => {
         const { id, value } = e.currentTarget;
@@ -20,7 +20,6 @@ const Login: React.FC<Props> = ({setToken}) => {
     };
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
-        console.log("in")
         e.preventDefault();
         handleLogin(formData)
             .then((result: LoginDataType | undefined) => {
@@ -34,6 +33,11 @@ const Login: React.FC<Props> = ({setToken}) => {
                 }
             })
             .catch((error) => {
+                setComplete(error.message)
+                setTimeout(() => {
+                    setComplete("")
+                }, 3000);
+
                 console.error("Error while login:", error);
             });
     };
@@ -41,6 +45,7 @@ const Login: React.FC<Props> = ({setToken}) => {
     return (
         <div>
             <h2 className='ml-15'>Login</h2>
+            <div className='text-center'>{complete}</div>
             <form className='Form Login' onSubmit={handleSubmit}>
 
                 <div>
@@ -59,16 +64,16 @@ const Login: React.FC<Props> = ({setToken}) => {
                     </div>
                 </div>
                 <div>
-                    
+
                     <button disabled={!!checkInput(formData.username, formData.password)}
-                    className={!!checkInput(formData.username, formData.password) ? "disabled" : ""}>Login</button> 
+                        className={!!checkInput(formData.username, formData.password) ? "disabled" : ""}>Login</button>
                 </div>
-               
+
             </form>
             <div className='text-center'>
-                 <Link className='text-decoration-none' to='/auth/register'>Sign Up</Link> 
+                <Link className='text-decoration-none' to='/auth/register'>Sign Up</Link>
             </div>
-          
+
         </div>
 
     );

@@ -1,17 +1,16 @@
 import axios, { AxiosResponse } from "axios"
 const baseUrl: string | undefined = "http://localhost:4000/api/v1"
 
-export const login = async (user_data: IUser): Promise<AxiosResponse<LoginDataType>> => {
+export const login = async (user_data: IUser): Promise<AxiosResponse<LoginDataType>>  => {
   try {
     const user: AxiosResponse<LoginDataType> = await axios.post(
       `${baseUrl}/auth/login`,
       user_data,
-
     )
     return user
-  } catch (error) {
-    console.log(error)
-    throw new Error("Error  while logining")
+  } catch (error: any) {
+    console.log(error?.status)
+    throw new Error("Invalid Username or Password")
   }
 }
 
@@ -24,7 +23,7 @@ export const register = async (user_data: IUser): Promise<AxiosResponse<ApiDataT
     return user
   } catch (error) {
     console.log(error)
-    throw new Error("Error while registering")
+    throw new Error("User details rejected")
   }
 }
 

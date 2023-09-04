@@ -8,7 +8,7 @@ interface ITask {
   }
 
   interface IUser{
-    _id: string
+    _id?: string
     username: string
     password: string
   }
@@ -16,6 +16,11 @@ interface ITask {
   type LoginDataType = {
     user: {_id: string, username: string}
     token: string
+  }
+
+  type ErrorDataType = {
+    message: string
+    status: Number
   }
   
   interface TaskProps {

@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 
 
 const Login: React.FC = () => {
-    const [formData, setFormData] = useState<IUser>({ username: '', password: '', _id: '' });
+    const [formData, setFormData] = useState<IUser>({ username: '', password: '' });
     const [complete, setComplete] = useState<string>();
     const navigate = useNavigate();
 
@@ -20,6 +20,7 @@ const Login: React.FC = () => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
+
         handleSignUp(formData)
             .then((result: ApiDataType | undefined) => {
                 if (result) {
@@ -36,6 +37,10 @@ const Login: React.FC = () => {
                 }
             })
             .catch((error) => {
+                setComplete(error.message)
+                setTimeout(() => {
+                    setComplete('')
+                }, 4000)
                 console.error("Error registering user:", error);
             });
     };
@@ -43,9 +48,8 @@ const Login: React.FC = () => {
     return (
         <div>
             <h2 className='ml-15'>Sign Up</h2>
+            <div className='text-center'>{complete}</div>
             <form className='Form Login' onSubmit={handleSubmit}>
-
-                <div>{complete}</div>
                 <div>
                     <div>
                         <label htmlFor='name'>Username</label>
@@ -65,8 +69,8 @@ const Login: React.FC = () => {
                     className={checkInput(formData.password, formData.username) ? "disabled" : ""}>Register</button>
             </form>
             <div className='text-center'>
-                 <Link className='text-decoration-none' to='/auth/login'>Login</Link>
-                 </div>
+                <Link className='text-decoration-none' to='/auth/login'>Login</Link>
+            </div>
         </div>
     );
 };
