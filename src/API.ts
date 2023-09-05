@@ -8,9 +8,8 @@ export const login = async (user_data: IUser): Promise<AxiosResponse<LoginDataTy
       user_data,
     )
     return user
-  } catch (error: any) {
-    console.log(error?.status)
-    throw new Error("Invalid Username or Password")
+  } catch (error) {
+    throw error; // Rethrow the Axios error from the API
   }
 }
 
@@ -23,7 +22,7 @@ export const register = async (user_data: IUser): Promise<AxiosResponse<ApiDataT
     return user
   } catch (error) {
     console.log(error)
-    throw new Error("User details rejected")
+    throw error
   }
 }
 
@@ -40,7 +39,7 @@ export const getTasks = async (token: string): Promise<AxiosResponse<ApiDataType
     return tasks
   } catch (error) {
     console.log(error)
-    throw new Error("Error fetching task")
+    throw error
   }
 }
 
@@ -65,7 +64,7 @@ export const addTask = async (
     return saveTask
   } catch (error) {
     console.log(error)
-    throw new Error("Error adding task")
+    throw error
   }
 }
 
@@ -88,7 +87,7 @@ export const updateTask = async (
     return updatedTask
   } catch (error) {
     console.log(error)
-    throw new Error("Error updating task")
+    throw error
   }
 }
 
@@ -108,6 +107,6 @@ export const deleteTask = async (
     return deletedTask
   } catch (error) {
     console.log(error)
-    throw new Error("Error deleting task")
+    throw error
   }
 }

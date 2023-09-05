@@ -1,10 +1,11 @@
 import React, { Suspense, useState } from 'react'
 import Tasks from './components/Tasks'
 import { MyContext } from "./MyContext";
-import { CookiesProvider, useCookies } from 'react-cookie';
+import { useCookies } from 'react-cookie';
 import Login from './components/auth/login';
 import Register from './components/auth/register';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ErrorBoundary from './ErrorBoundary';
 
 
 const App: React.FC = () => {
@@ -27,7 +28,7 @@ const App: React.FC = () => {
     <main className='App'>
       <h1><img src="/banner.png" alt="TryHackMe Test" className='banner' /></h1>
       <MyContext.Provider value={{ tasks, updateContexts, token,  updateTokenContexts}}>
-        <CookiesProvider>
+        <ErrorBoundary>
           <Suspense fallback={"Loading ..."}>
             {token ?
               <Tasks />
@@ -42,7 +43,7 @@ const App: React.FC = () => {
               </Router>
             }
           </Suspense>
-        </CookiesProvider>
+        </ErrorBoundary>
       </MyContext.Provider>
     </main>
   )

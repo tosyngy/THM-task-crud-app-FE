@@ -18,10 +18,6 @@ interface ITask {
     token: string
   }
 
-  type ErrorDataType = {
-    message: string
-    status: Number
-  }
   
   interface TaskProps {
     task: ITask
@@ -32,7 +28,8 @@ interface ITask {
     message: string
     status: string
     tasks: ITask[]
-    task?: ITask
+    task: ITask
+    
   }
 
   interface AddTask {

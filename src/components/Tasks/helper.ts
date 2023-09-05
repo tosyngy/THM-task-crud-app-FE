@@ -8,7 +8,7 @@ const FetchTasks = (token: string): Promise<ITask[]> => {
     });
 };
 
-const UpdateTask = async ( task: ITask, token: string): Promise<ApiDataType | undefined> => {
+const UpdateTask = async ( task: ITask, token: string): Promise<ApiDataType> => {
   try {
     const response = await updateTask(task, token);
     if (response.status !== 200) {
@@ -21,7 +21,7 @@ const UpdateTask = async ( task: ITask, token: string): Promise<ApiDataType | un
   }
 };
 
-const DeleteTask = async ( _id: string, token: string): Promise<ApiDataType | undefined> => {
+const DeleteTask = async ( _id: string, token: string): Promise<ApiDataType> => {
   try {
     const response = await deleteTask(_id, token);
     if (response.status !== 200) {

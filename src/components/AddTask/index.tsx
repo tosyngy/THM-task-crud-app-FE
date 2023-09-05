@@ -20,7 +20,7 @@ const AddTask: React.FC = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     handleSaveTask(formData, token)
-      .then((result: ApiDataType | undefined) => {
+      .then((result: ApiDataType) => {
         if (result) {
           updateContexts(result.tasks)
           setFormData({
@@ -51,7 +51,7 @@ const AddTask: React.FC = () => {
             type='text'
             id='description'
             value={formData.description}
-            required
+          
           />
         </div>
       </div>

@@ -1,13 +1,10 @@
 import {login, register } from "../../API";
 
 
-const handleLogin = async ( formData: IUser): Promise<LoginDataType | undefined> => {
+const handleLogin = async (formData: IUser): Promise<LoginDataType | undefined> => {
   try {
     const response = await login(formData);
-    if (response?.status !== 200) {
-      throw new Error("Error! Task not saved", );
-    }
-    return response.data
+    return response.data;
   } catch (err) {
     return Promise.reject(err);
   }
@@ -17,9 +14,6 @@ const handleLogin = async ( formData: IUser): Promise<LoginDataType | undefined>
 const handleSignUp = async ( formData: IUser): Promise<ApiDataType | undefined> => {
   try {
     const response = await register(formData);
-    if (response?.status !== 200) {
-      throw new Error("Error! Task not saved");
-    }
     return response.data;
   } catch (err) {
     return Promise.reject(err); // Re-throw the error to be caught at the caller level

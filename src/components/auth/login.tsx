@@ -24,7 +24,7 @@ const Login: React.FC<Props> = ({ setToken }) => {
         handleLogin(formData)
             .then((result: LoginDataType | undefined) => {
                 if (result) {
-                    setToken(result.token)
+                    setToken(result.token);
                     setFormData({
                         ...formData,
                         "username": "",
@@ -33,14 +33,18 @@ const Login: React.FC<Props> = ({ setToken }) => {
                 }
             })
             .catch((error) => {
-                setComplete(error.message)
+                if (error.response) {
+                    setComplete(error.response.data.message);
+                } else {
+                    setComplete("An error occurred during login.");
+                }
                 setTimeout(() => {
-                    setComplete("")
+                    setComplete("");
                 }, 3000);
-
                 console.error("Error while login:", error);
             });
     };
+
 
     return (
         <div>

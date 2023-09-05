@@ -37,7 +37,11 @@ const Login: React.FC = () => {
                 }
             })
             .catch((error) => {
-                setComplete(error.message)
+                if (error.response) {
+                    setComplete(error.response.data.message);
+                } else {
+                    setComplete("An error occurred during login.");
+                }
                 setTimeout(() => {
                     setComplete('')
                 }, 4000)
